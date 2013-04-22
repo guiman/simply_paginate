@@ -1,6 +1,6 @@
 # SimplyPaginate
 
-TODO: Write a gem description
+Simply paginate will do just that, give me a collection and you will be able to use a pagination logic (no extra html boilerplate or dependecies).
 
 ## Installation
 
