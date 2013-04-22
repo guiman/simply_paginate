@@ -12,10 +12,6 @@ module SimplyPaginate
       @collection[pos]
     end
     
-    def each(&block)
-      @collection.each(&block)
-    end
-    
     def current
       self
     end
