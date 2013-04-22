@@ -28,7 +28,7 @@ collection = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
 paginator = SimplyPaginate::Paginator.new(collection)
 
-# create pages with max of 5 elements
+# create pages with max of 3 elements
 paginator.paginate 3
 
 # retrieve a certain page
