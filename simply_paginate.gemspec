@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["alvarola@gmail.com"]
   spec.description   = %q{This gem is a simple paginator for Enumerable collections}
   spec.summary       = %q{You enumerate it we will simply paginate it}
-  spec.homepage      = ""
+  spec.homepage      = "https://github.com/guiman/simply_paginate"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)
