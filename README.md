@@ -1,5 +1,4 @@
 # SimplyPaginate
-
 Simply paginate will do just that, give me a collection and you will be able to use a pagination logic (no extra html boilerplate or dependecies).
 
 ## Installation
@@ -49,7 +48,9 @@ There is also the possibility to use a DataMapper::Collection as the collection 
 
 ```ruby
 # I will guess you have a model called Post
-paginator = SimplyPaginate::Paginator.new(Post.all).paginate 10
+# By default Paginator.per_page is 10
+
+paginator = SimplyPaginate::Paginator.new(Post.all)
 
 paginator[0].elements # this will return a DataMapper::Collection with the first 10 elements
 ```
