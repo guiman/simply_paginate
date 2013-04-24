@@ -2,10 +2,11 @@ require 'spec_helper'
 
 describe SimplyPaginate::Page do
   before do
-    @paginator = SimplyPaginate::Paginator.new([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]).paginate 5
+    SimplyPaginate::Paginator.per_page = 5
+
+    @paginator = SimplyPaginate::Paginator.new([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
     @first_page = SimplyPaginate::Page.new(0, 4, @paginator)
-    @last_page = SimplyPaginate::Page.new(5, 9, @paginator, @first_page)
-    @first_page.next = @last_page
+    @last_page = SimplyPaginate::Page.new(5, 9, @paginator)
 
     class SimplyPaginate::Page
       def paginator
@@ -32,25 +33,25 @@ describe SimplyPaginate::Page do
 
   describe "when having next and previous pages" do
     before do
-      @paginator.paginate 2
+      SimplyPaginate::Paginator.per_page = 2
     end
 
     it "must be able to go back and foward" do
-      @paginator[1].next.must_equal @paginator[2]
-      @paginator[1].previous.must_equal @paginator[0]
+      @paginator[1].next.elements.must_equal @paginator[2].elements
+      @paginator[1].previous.elements.must_equal @paginator[0].elements
     end
   end
 
   describe "when having previous and no next" do
     it "must be able to go back " do
       @last_page.next.must_be_nil
-      @last_page.previous.must_equal @first_page
+      @last_page.previous.elements.must_equal @first_page.elements
     end
   end
 
   describe "when having next and no previous" do
     it "must be able to go back " do
-      @first_page.next.must_equal @last_page
+      @first_page.next.elements.must_equal @last_page.elements
       @first_page.previous.must_be_nil
     end
   end

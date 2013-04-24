@@ -2,32 +2,35 @@ module SimplyPaginate
   class Paginator
     attr_reader :pages, :collection
 
+    def self.per_page=(pages_per_page)
+      @@per_page = pages_per_page
+    end
+
+    def self.per_page
+      @@per_page
+    end
+
     def initialize(collection)
       @collection = collection
       @pages = []
-    end
-
-    def paginate(limit)
-      @pages = []
-      first = last = 0
-      count = limit - 1
-      final_index = @collection.count - 1
-
-      (@collection.count.to_f / limit.to_f).ceil.times do
-        last = (last <= final_index) ? first + count : final_index
-
-        page = Page.new(first, last, self, @pages[@pages.count - 1])
-        @pages[@pages.count - 1].next = page unless @pages[@pages.count - 1].nil?
-
-        @pages << page
-        first = last + 1
-      end
-
-      self
+      @current = nil
     end
 
     def [](pos)
-      @pages[pos]
+      first = pos * @@per_page
+      last = first + @@per_page - 1
+
+      Page.new(first, last, self)
     end
+
+    def total_pages
+      (@collection.count.to_f / @@per_page.to_f).ceil
+    end
+
+    def current=(page)
+      @current = page
+    end
+
+    Paginator.per_page = 10
   end
 end

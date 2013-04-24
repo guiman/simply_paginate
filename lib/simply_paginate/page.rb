@@ -6,28 +6,20 @@ module SimplyPaginate
       @first = first
       @last = last
       @paginator = paginator
-      @next_page = next_page
-      @previous_page = previous_page
-    end
-
-    def current
-      self
     end
 
     def next
-      @next_page
+      first = @last + 1
+      last = first + Paginator.per_page - 1
+
+      (first >= @paginator.collection.count) ? nil : @paginator.current = Page.new(first, last, @paginator)
     end
 
     def previous
-      @previous_page
-    end
+      first = @first - Paginator.per_page
+      last = @first - 1
 
-    def next=(v)
-      @next_page = v
-    end
-
-    def previous=(v)
-      @previous_page = v
+      (first < 0) ? nil : @paginator.current = Page.new(first, last, @paginator)
     end
 
     def elements
