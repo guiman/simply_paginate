@@ -45,6 +45,15 @@ paginator[0].next.next.next.previous.elements[0]
 paginator[0].next.next.next.previous.elements
 ```
 
+There is also the possibility to use a DataMapper::Collection as the collection to be paginated (right out of the box, not extensions needed):
+
+```ruby
+# I will guess you have a model called Post
+paginator = SimplyPaginate::Paginator.new(Post.all).paginate 10
+
+paginator[0].elements # this will return a DataMapper::Collection with the first 10 elements
+```
+
 ## Currently working on:
 
 * Adding support for common ORMs like: ActiveRecord, Sequel and DataMapper.
