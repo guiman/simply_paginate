@@ -1,5 +1,5 @@
 # SimplyPaginate
-[![Build Status](https://travis-ci.org/guiman/simply_paginate.png)](https://travis-ci.org/guiman/simply_paginate)
+[![Build Status](https://travis-ci.org/guiman/simply_paginate.png)](https://travis-ci.org/guiman/simply_paginate) [![Code Climate](https://codeclimate.com/github/guiman/simply_paginate.png)](https://codeclimate.com/github/guiman/simply_paginate)
 
 Simply paginate will do just that, give me a collection and you will be able to use a pagination logic (no extra html boilerplate or dependecies).
 
@@ -62,13 +62,6 @@ For a more detailed example refer to the examples/data_mapper_example folder.
 
 * Adding support for common ORMs like: ActiveRecord, Sequel and DataMapper.
 * Testing...
-
-## Alternative branch
-This branch contains a different implementation on the paging algorithm. This one creates pages on the fly and calculating offsets,
-so when you call ```previous``` or ```next``` or ```[]```page object representing is created on that moment, thus saving memory.
-
-Another modification is that the ```per_page``` value has moved up to the class, and there is no need on calling ```paginate``` anymore,
-also the ```pages``` has been dropped.
 
 ## Release 0.0.2 features:
 * Dropping the each_slice in order to use a more memory efficient index algorithm for paging.
