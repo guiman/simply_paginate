@@ -1,6 +1,6 @@
 module SimplyPaginate
   class Page
-    attr_reader :next_page, :previous_page
+    attr_reader :first, :last
 
     def initialize(first, last, paginator, previous_page = nil, next_page = nil)
       @first = first
@@ -20,6 +20,10 @@ module SimplyPaginate
       last = @first - 1
 
       (first < 0) ? nil : @paginator.current = Page.new(first, last, @paginator)
+    end
+
+    def current?
+      !@paginator.current.nil? && @paginator.current.first == @first && @paginator.current.last == @last
     end
 
     def elements

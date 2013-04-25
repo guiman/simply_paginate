@@ -56,4 +56,19 @@ describe SimplyPaginate::Page do
     end
   end
 
+  describe "when moving to previous or next" do
+    it "must be setted as current when landed after next" do
+      @paginator[0].next
+      @paginator[0].current?.must_equal false
+      @paginator[1].current?.must_equal true
+    end
+
+    it "must be setted as current when landed after previous" do
+      @paginator[1].previous
+      @paginator[1].current?.must_equal false
+      @paginator[0].current?.must_equal true
+    end
+
+  end
+
 end
