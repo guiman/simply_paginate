@@ -1,4 +1,6 @@
 # SimplyPaginate
+[![Build Status](https://travis-ci.org/guiman/simply_paginate.png)](https://travis-ci.org/guiman/simply_paginate)
+
 Simply paginate will do just that, give me a collection and you will be able to use a pagination logic (no extra html boilerplate or dependecies).
 
 ## Installation
