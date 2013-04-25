@@ -56,6 +56,7 @@ paginator = SimplyPaginate::Paginator.new(Post.all)
 
 paginator[0].elements # this will return a DataMapper::Collection with the first 10 elements
 ```
+For a more detailed example refer to the examples/data_mapper_example folder.
 
 ## Currently working on:
 
