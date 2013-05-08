@@ -19,6 +19,8 @@ Or install it yourself as:
 
 ## Motivation
 When dealing with pagination most known gems come bundled with lots of extra functionality I usually don't need (like html boilerplate), this is my attempt to create just the pagination logic, as simple as that.
+So if you need pagiation but don't want to reinvent the wheel and keep your collections Pagination Agnostic, this is the gem you need. The only
+requirement is the adoption of the popular ruby Enumerable interface.
 
 ## Usage
 
@@ -56,11 +58,13 @@ paginator = SimplyPaginate::Paginator.new(Post.all)
 
 paginator[0].elements # this will return a DataMapper::Collection with the first 10 elements
 ```
+
 For a more detailed example refer to the examples/data_mapper_example folder.
 
 ## Currently working on:
 
 * Adding support for common ORMs like: ActiveRecord, Sequel and DataMapper.
+* Bringing a more rich interface to handle pages
 * Testing...
 
 ## Release 0.0.2 features:
