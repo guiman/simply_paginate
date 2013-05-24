@@ -43,7 +43,7 @@ describe Paginator do
 
   describe "when iterating using 'start', 'next' and 'next?'" do
     it "must need to start before moving to the next " do
-      ->{  pages.next! }.must_raise NoMethodError
+      lambda { pages.next! }.must_raise NoMethodError
     end
 
     it "must move to the next page using 'next'" do
