@@ -14,11 +14,11 @@ module SimplyPaginate
     end
 
     def next
-      @page_creator.(1)
+      @page_creator.call(1)
     end
 
     def previous
-      @page_creator.(-1)
+      @page_creator.call(-1)
     end
 
     def elements

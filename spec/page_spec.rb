@@ -8,11 +8,11 @@ describe Page do
 
   let(:page) { lambda { |number| Page.new number, page_array_collection, 3 } }
 
-  let(:first_page) { page.(1) }
+  let(:first_page) { page.call(1) }
 
-  let(:second_page) { page.(2) }
+  let(:second_page) { page.call(2) }
 
-  let(:last_page) { page.(4) }
+  let(:last_page) { page.call(4) }
 
   it "must represent a specific page on a collection" do
     first_page.elements.must_equal [1, 2, 3]

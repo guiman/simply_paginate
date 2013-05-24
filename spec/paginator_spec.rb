@@ -10,9 +10,9 @@ describe Paginator do
 
   let(:page) { lambda { |number| Page.new number, page_array_collection } }
 
-  let(:first_page) { page.(1) }
+  let(:first_page) { page.call(1) }
 
-  let(:last_page) { page.(4) }
+  let(:last_page) { page.call(4) }
 
   it "must be able to iterate using each" do
     count = 0
