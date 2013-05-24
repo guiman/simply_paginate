@@ -6,7 +6,7 @@ describe Page do
 
   let(:page_array_collection) { [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }
 
-  let(:page) { ->(number){ Page.new number, page_array_collection, 3 } }
+  let(:page) { lambda { |number| Page.new number, page_array_collection, 3 } }
 
   let(:first_page) { page.(1) }
 

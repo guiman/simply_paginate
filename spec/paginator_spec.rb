@@ -8,7 +8,7 @@ describe Paginator do
 
   let(:pages) { Paginator.new page_array_collection }
 
-  let(:page) { ->(number){ Page.new number, page_array_collection } }
+  let(:page) { lambda { |number| Page.new number, page_array_collection } }
 
   let(:first_page) { page.(1) }
 

@@ -7,7 +7,7 @@ module SimplyPaginate
       @collection = collection
       @size = size
 
-      @page_creator = ->(number) do
+      @page_creator = lambda do |number|
         new_index = @index + number
         Page.new(new_index, @collection, @size) unless (new_index == 0) || (new_index > (@collection.count.to_f / @size.to_f).ceil)
       end
