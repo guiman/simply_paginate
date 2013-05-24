@@ -68,6 +68,22 @@ an improvement on the API.
 Now a Page can be used without the need of having a Paginator, and also a Paginator could be transversed
 without need to access pages directly.
 
+```ruby
+require 'simply_paginate'
+
+include SimplyPaginate
+
+collection = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+# Give me the first page of the collection with a size of 3
+first_page = Page.new(1, collection, 3)
+
+first_page.elements
+#=> [1, 2, 3]
+first_page.next.elements
+#=> [4, 5, 6]
+```
+
 ## Contributing
 
 1. Fork it
