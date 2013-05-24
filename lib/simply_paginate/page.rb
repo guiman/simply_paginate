@@ -1,33 +1,35 @@
 module SimplyPaginate
   class Page
-    attr_reader :first, :last
+    attr_reader :index, :collection, :size
 
-    def initialize(first, last, paginator, previous_page = nil, next_page = nil)
-      @first = first
-      @last = last
-      @paginator = paginator
+    def initialize(page, collection, size = Paginator.per_page)
+      @index = page
+      @collection = collection
+      @size = size
+
+      @page_creator = ->(number) do
+        new_index = @index + number
+        Page.new(new_index, @collection, @size) unless (new_index == 0) || (new_index > (@collection.count.to_f / @size.to_f).ceil)
+      end
     end
 
     def next
-      first = @last + 1
-      last = first + Paginator.per_page - 1
-
-      (first >= @paginator.collection.count) ? nil : @paginator.current = Page.new(first, last, @paginator)
+      @page_creator.(1)
     end
 
     def previous
-      first = @first - Paginator.per_page
-      last = @first - 1
-
-      (first < 0) ? nil : @paginator.current = Page.new(first, last, @paginator)
-    end
-
-    def current?
-      !@paginator.current.nil? && @paginator.current.first == @first && @paginator.current.last == @last
+      @page_creator.(-1)
     end
 
     def elements
-      @paginator.collection[@first..@last]
+      first = (@index - 1) * @size
+      last = first + size - 1
+
+      collection[first..last]
+    end
+
+    def ==(other)
+      (index == other.index) && (elements == other.elements) if other.respond_to?(:index) && other.respond_to?(:elements)
     end
   end
 end

@@ -1,7 +1,8 @@
 module SimplyPaginate
+  FIRST_PAGE_INDEX = 1
+
   class Paginator
     attr_reader :collection
-    attr_accessor :current
 
     def self.per_page=(amount_per_page)
       raise NotInRangeError.new("Amount per page should be greater than 0") unless amount_per_page > 0
@@ -15,18 +16,42 @@ module SimplyPaginate
 
     def initialize(collection)
       @collection = collection
-      @current = nil
+      @per_page = @@per_page
     end
 
     def [](pos)
-      first = pos * @@per_page
-      last = first + @@per_page - 1
+      Page.new(pos, @collection) unless pos == 0 || pos > total_pages
+    end
 
-      ((first < 0) || (first >= self.collection.count)) ? nil : Page.new(first, last, self)
+    def next!
+      raise NoMethodError.new("You need to start before iterating") unless @current
+      @current = @current.next
+    end
+
+    def next?
+      @current != nil
+    end
+
+    def start
+      @current = self[FIRST_PAGE_INDEX]
+    end
+
+    def current
+      @current
+    end
+
+    def each
+      start
+
+      while next? do
+        yield current
+
+        next!
+      end
     end
 
     def total_pages
-      (@collection.count.to_f / @@per_page.to_f).ceil
+      (@collection.count.to_f / @per_page.to_f).ceil
     end
 
     Paginator.per_page = 10
