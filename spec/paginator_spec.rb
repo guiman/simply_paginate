@@ -3,16 +3,13 @@ require 'spec_helper'
 Paginator.per_page = 3
 
 describe Paginator do
-
-  let(:page_array_collection) { [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }
+  include Helpers
 
   let(:pages) { Paginator.new page_array_collection }
 
-  let(:page) { lambda { |number| Page.new number, page_array_collection } }
+  let(:first_page) { build_page 1 }
 
-  let(:first_page) { page.call(1) }
-
-  let(:last_page) { page.call(4) }
+  let(:last_page) { build_page 4 }
 
   it "must be able to iterate using each" do
     count = 0
@@ -41,16 +38,24 @@ describe Paginator do
     pages[5].must_be_nil
   end
 
-  describe "when iterating using 'start', 'next' and 'next?'" do
+  it "must be able to retrieve the first page" do
+    pages.first.must_equal first_page
+  end
+
+  it "must be able to retrieve the last page" do
+    pages.last.must_equal pages[4]
+  end
+
+  describe "when iterating using 'start', 'next!' and 'next?'" do
     it "must need to start before moving to the next " do
       lambda { pages.next! }.must_raise NoMethodError
     end
 
-    it "must move to the next page using 'next'" do
+    it "must move to the next page using 'next!'" do
       iteration_pages = pages
       iteration_pages.start
       iteration_pages.next!
-      iteration_pages.current.must_equal Page.new(2, page_array_collection)
+      iteration_pages.current.must_equal build_page(2)
     end
 
     it "must retrieve the current page using 'current'" do

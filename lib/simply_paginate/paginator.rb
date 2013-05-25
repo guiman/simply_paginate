@@ -14,14 +14,30 @@ module SimplyPaginate
       @@per_page
     end
 
-    def initialize(collection)
+    def initialize(collection, per_page = self.class.per_page)
       @collection = collection
-      @per_page = @@per_page
+      @per_page = per_page
+    end
+
+    ## Basic Operations
+
+    def first
+      self[FIRST_PAGE_INDEX]
+    end
+
+    def last
+      self[total_pages]
+    end
+
+    def total_pages
+      (@collection.count.to_f / @per_page.to_f).ceil
     end
 
     def [](pos)
       Page.new(pos, @collection) unless pos == 0 || pos > total_pages
     end
+
+    ## Iteration
 
     def next!
       raise NoMethodError.new("You need to start before iterating") unless @current
@@ -33,7 +49,7 @@ module SimplyPaginate
     end
 
     def start
-      @current = self[FIRST_PAGE_INDEX]
+      @current = first
     end
 
     def current
@@ -48,10 +64,6 @@ module SimplyPaginate
 
         next!
       end
-    end
-
-    def total_pages
-      (@collection.count.to_f / @per_page.to_f).ceil
     end
 
     Paginator.per_page = 10

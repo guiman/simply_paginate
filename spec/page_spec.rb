@@ -3,16 +3,13 @@ require 'spec_helper'
 include SimplyPaginate
 
 describe Page do
+  include Helpers
 
-  let(:page_array_collection) { [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }
+  let(:first_page) { build_page 1 }
 
-  let(:page) { lambda { |number| Page.new number, page_array_collection, 3 } }
+  let(:second_page) { build_page 2 }
 
-  let(:first_page) { page.call(1) }
-
-  let(:second_page) { page.call(2) }
-
-  let(:last_page) { page.call(4) }
+  let(:last_page) { build_page 4 }
 
   it "must represent a specific page on a collection" do
     first_page.elements.must_equal [1, 2, 3]
