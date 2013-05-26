@@ -29,9 +29,7 @@ include SimplyPaginate
 
 collection = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
-Paginator.per_page = 3
-
-pages = Paginator.new(collection)
+pages = Paginator.new(collection, 3)
 
 # retrieve a certain page
 pages[1]
@@ -84,6 +82,15 @@ first_page.next.elements
 #=> [4, 5, 6]
 ```
 
+##0.0.4 - Features:
+
+* Redesign on relation between paginator and pages. You can use them togheter or separately.
+* Improved API for Paginator, now including:
+  * each iteration
+  * next!, next?, current and start methods for manual iteration
+  * first and last accessors
+* Test improvement
+ 
 ## Contributing
 
 1. Fork it
