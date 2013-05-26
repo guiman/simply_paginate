@@ -19,6 +19,8 @@ Or install it yourself as:
 
 ## Motivation
 When dealing with pagination most known gems come bundled with lots of extra functionality I usually don't need (like html boilerplate), this is my attempt to create just the pagination logic, as simple as that.
+So if you need pagiation but don't want to reinvent the wheel and keep your collections Pagination Agnostic, this is the gem you need. The only
+requirement is the adoption of the popular ruby Enumerable interface.
 
 ## Usage
 
@@ -81,8 +83,7 @@ first_page.elements
 first_page.next.elements
 #=> [4, 5, 6]
 ```
-
-##0.0.4 - Features:
+##0.0.4 - Changelog:
 
 * Redesign on relation between paginator and pages. You can use them togheter or separately.
 * Improved API for Paginator, now including:
