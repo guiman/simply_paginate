@@ -27,50 +27,71 @@ requirement is the adoption of the popular ruby Enumerable interface.
 ```ruby
 require 'simply_paginate'
 
+include SimplyPaginate
+
 collection = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
-paginator = SimplyPaginate::Paginator.new(collection)
-
-# create pages with max of 3 elements
-SimplyPaginate::Paginator.per_page 3
+pages = Paginator.new(collection, 3)
 
 # retrieve a certain page
-paginator[0]
+pages[1]
 
 #move through the pages freely
-paginator[0].next
-paginator[0].previous
+pages[1].next
+pages[1].previous
 
 #you might want the first element on the 3rd page
-paginator[0].next.next.next.previous.elements[0]
+pages[1].next.next.next.previous.elements[0]
 
 #or maybe all of them
-paginator[0].next.next.next.previous.elements
+pages[0].next.next.next.previous.elements
+
+#you can also iterate the ruby way
+pages.each do |page|
+  puts page.elements
+end
+
+#or in a more old fashion way
+pages.start
+
+while pages.next? do
+  puts pages.current.elements
+  
+  pages.next!
+end
 ```
 
-There is also the possibility to use a DataMapper::Collection as the collection to be paginated (right out of the box, not extensions needed):
+## Changes on this branch
+Well this branch introduced a better design about the relationship between pages and page, and also
+an improvement on the API.
+
+Now a Page can be used without the need of having a Paginator, and also a Paginator could be transversed
+without need to access pages directly.
 
 ```ruby
-# I will guess you have a model called Post
-# By default Paginator.per_page is 10
+require 'simply_paginate'
 
-paginator = SimplyPaginate::Paginator.new(Post.all)
+include SimplyPaginate
 
-paginator[0].elements # this will return a DataMapper::Collection with the first 10 elements
+collection = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+# Give me the first page of the collection with a size of 3
+first_page = Page.new(1, collection, 3)
+
+first_page.elements
+#=> [1, 2, 3]
+first_page.next.elements
+#=> [4, 5, 6]
 ```
+##0.0.4 - Changelog:
 
-For a more detailed example refer to the examples/data_mapper_example folder.
-
-## Currently working on:
-
-* Adding support for common ORMs like: ActiveRecord, Sequel and DataMapper.
-* Bringing a more rich interface to handle pages
-* Testing...
-
-## Release 0.0.2 features:
-* Dropping the each_slice in order to use a more memory efficient index algorithm for paging.
-* Adding more tests to the page object.
-
+* Redesign on relation between paginator and pages. You can use them togheter or separately.
+* Improved API for Paginator, now including:
+  * each iteration
+  * next!, next?, current and start methods for manual iteration
+  * first and last accessors
+* Test improvement
+ 
 ## Contributing
 
 1. Fork it
