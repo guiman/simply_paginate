@@ -1,74 +1,39 @@
 require 'spec_helper'
 
-describe SimplyPaginate::Page do
-  before do
-    SimplyPaginate::Paginator.per_page = 5
+include SimplyPaginate
 
-    @paginator = SimplyPaginate::Paginator.new([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
-    @first_page = SimplyPaginate::Page.new(0, 4, @paginator)
-    @last_page = SimplyPaginate::Page.new(5, 9, @paginator)
+describe Page do
+  include Helpers
 
-    class SimplyPaginate::Page
-      def paginator
-        @paginator
-      end
-    end
+  let(:first_page) { build_page 1 }
+
+  let(:second_page) { build_page 2 }
+
+  let(:last_page) { build_page 4 }
+
+  it "must represent a specific page on a collection" do
+    first_page.elements.must_equal [1, 2, 3]
+    first_page.index.must_equal SimplyPaginate::FIRST_PAGE_INDEX
   end
 
-  it "must always have an instance of paginator" do
-    @first_page.paginator.wont_be_nil
-    @last_page.paginator.wont_be_nil
-
-    @first_page.next.paginator.wont_be_nil
-    @first_page.next.previous.paginator.wont_be_nil
+  it "must be able to retrieve it's elements" do
+    first_page.elements.must_equal [1, 2, 3]
   end
 
-  it "must be able to get the elements" do
-    @first_page.elements.must_equal [1, 2, 3, 4, 5]
-    @last_page.elements.must_equal [6, 7, 8, 9, 10]
-
-    @first_page.next.elements.must_equal [6, 7, 8, 9, 10]
-    @last_page.previous.elements.must_equal [1, 2, 3, 4, 5]
+  it "must be able to compare with other page" do
+    first_page.must_equal first_page
+    first_page.wont_equal second_page
+    first_page.wont_equal Page.new(1, page_array_collection, 5)
+    first_page.must_equal Page.new(1, [1, 2, 3], 3)
   end
 
-  describe "when having next and previous pages" do
-    before do
-      SimplyPaginate::Paginator.per_page = 2
-    end
-
-    it "must be able to go back and foward" do
-      @paginator[1].next.elements.must_equal @paginator[2].elements
-      @paginator[1].previous.elements.must_equal @paginator[0].elements
-    end
+  it "must be able to move forward" do
+    first_page.next.must_equal second_page
+    last_page.next.must_be_nil
   end
 
-  describe "when having previous and no next" do
-    it "must be able to go back " do
-      @last_page.next.must_be_nil
-      @last_page.previous.elements.must_equal @first_page.elements
-    end
+  it "must be able to move backwards" do
+    first_page.previous.must_be_nil
+    second_page.previous.must_equal first_page
   end
-
-  describe "when having next and no previous" do
-    it "must be able to go back " do
-      @first_page.next.elements.must_equal @last_page.elements
-      @first_page.previous.must_be_nil
-    end
-  end
-
-  describe "when moving to previous or next" do
-    it "must be setted as current when landed after next" do
-      @paginator[0].next
-      @paginator[0].current?.must_equal false
-      @paginator[1].current?.must_equal true
-    end
-
-    it "must be setted as current when landed after previous" do
-      @paginator[1].previous
-      @paginator[1].current?.must_equal false
-      @paginator[0].current?.must_equal true
-    end
-
-  end
-
 end
