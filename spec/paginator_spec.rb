@@ -46,6 +46,13 @@ describe Paginator do
     pages.last.must_equal pages[4]
   end
 
+  describe "when creating a paginator with an instance per_page", :focus do
+    it "must remember the per_page setting" do
+      pages = Paginator.new(page_array_collection, 2)
+      pages.first.elements.size.must_equal 2
+    end
+  end
+
   describe "when iterating using 'start', 'next!' and 'next?'" do
     it "must need to start before moving to the next " do
       lambda { pages.next! }.must_raise NoMethodError
