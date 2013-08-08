@@ -34,7 +34,7 @@ module SimplyPaginate
     end
 
     def [](pos)
-      Page.new(pos, @collection) unless pos == 0 || pos > total_pages
+      Page.new(pos, @collection, @per_page) unless pos == 0 || pos > total_pages
     end
 
     ## Iteration
