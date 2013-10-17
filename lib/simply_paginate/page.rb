@@ -8,8 +8,8 @@ module SimplyPaginate
       @size = size
 
       @move_page = lambda do |number|
-        new_index = @index + number
-        Page.new(new_index, @collection, @size) unless (new_index == 0) || (new_index > (@collection.count.to_f / @size.to_f).ceil)
+        new_index = index + number
+        Page.new(new_index, collection, size) unless (new_index <= 0) || (new_index > (collection.count.to_f / size.to_f).ceil)
       end
     end
 
