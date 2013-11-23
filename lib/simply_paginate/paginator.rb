@@ -33,19 +33,19 @@ module SimplyPaginate
       (@collection.count.to_f / @per_page.to_f).ceil
     end
 
-    def [](pos)
-      Page.new(pos, @collection, @per_page) unless pos == 0 || pos > total_pages
+    def [](index)
+      Page.new(index, @collection, @per_page) unless collection.empty? || index <= 0 || index > total_pages
     end
 
     ## Iteration
 
     def next!
-      raise NoMethodError.new("You need to start before iterating") unless @current
-      @current = @current.next
+      raise NoMethodError.new("You need to start before iterating") unless current
+      @current = current.next
     end
 
     def next?
-      @current != nil
+      current != nil
     end
 
     def start
