@@ -29,7 +29,7 @@ module SimplyPaginate
     end
 
     def ==(other)
-      (index == other.index) && (elements == other.elements) if other.respond_to?(:index) && other.respond_to?(:elements)
+      (index == other.index) && (elements == other.elements)
     end
   end
 end

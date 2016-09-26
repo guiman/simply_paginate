@@ -20,42 +20,27 @@ describe Page do
     end
 
     describe "#==" do
-      let(:other_page) { double }
       subject { page == other_page }
+      let(:other_page) { double }
 
       context "when they are equal" do
+
         before(:each) do
           allow(other_page).to receive(:index).and_return(0)
           allow(other_page).to receive(:elements).and_return(nil)
         end
 
-        specify { expect(subject).to be_true }
+        specify { expect(subject).to eq(true) }
       end
 
       context "when they are different" do
-        context "and the second dont respond to index" do
-          before(:each) do
-            allow(other_page).to receive(:elements).and_return([])
-          end
-
-          specify { expect(subject).to be_false }
-        end
-
-        context "and the second dont respond to elements" do
-          before(:each) do
-            allow(other_page).to receive(:index).and_return(1)
-          end
-
-          specify { expect(subject).to be_false }
-        end
-
         context "and the second has different values" do
           before(:each) do
             allow(other_page).to receive(:index).and_return(1)
             allow(other_page).to receive(:elements).and_return([])
           end
 
-          specify { expect(subject).to be_false }
+          specify { expect(subject).to eq(false) }
         end
       end
     end
@@ -91,33 +76,17 @@ describe Page do
           allow(other_page).to receive(:elements).and_return([1,2,3])
         end
 
-        specify { expect(subject).to be_true }
+        specify { expect(subject).to eq(true) }
       end
 
       context "when they are different" do
-        context "because the second dont respond to index" do
-          before(:each) do
-            allow(other_page).to receive(:elements).and_return([])
-          end
-
-          specify { expect(subject).to be_false }
-        end
-
-        context "because the second dont respond to elements" do
-          before(:each) do
-            allow(other_page).to receive(:index).and_return(1)
-          end
-
-          specify { expect(subject).to be_false }
-        end
-
         context "because the second has different values" do
           before(:each) do
             allow(other_page).to receive(:index).and_return(1)
             allow(other_page).to receive(:elements).and_return([])
           end
 
-          specify { expect(subject).to be_false }
+          specify { expect(subject).to eq(false) }
         end
       end
     end

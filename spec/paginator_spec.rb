@@ -39,21 +39,37 @@ describe Paginator do
   describe "iteration" do
     describe "next!" do
       context "iteration hasn't started" do
-        before(:each) { allow(subject).to receive(current).and_return(nil) }
-
-        # TODO: specify { expect(subject.next!).to raise_exception }
+        specify { expect { subject.next! }.to raise_error("You need to start before iterating") }
       end
 
       context "iteration started" do
         before(:each) { subject.start }
 
-        specify { expect(subject.next!).to be_instance_of(Page) }
+        specify do
+          expect(subject.next!).to be_instance_of(Page)
+        end
       end
 
       context "there are no more pages" do
-        before(:each) { allow(subject).to receive(current).and_return(nil) }
+        before(:each) { allow(subject).to receive(:current).and_return(nil) }
 
-        # TODO: specify { expect(subject.next!).to raise_exception }
+        specify { expect { subject.next! }.to raise_error("You need to start before iterating") }
+      end
+    end
+  end
+
+  describe "initialize" do
+    describe "without setting a per page" do
+      specify "it falls back to class level per_page" do
+        paginator = Paginator.new([0,1,2,3,4,5,6,7,8,9])
+        expect(paginator.first.elements.count).to eq(10)
+      end
+    end
+
+    describe "setting a per page" do
+      specify "it falls back to class level per_page" do
+        paginator = Paginator.new([0,1,2,3,4,5,6,7,8,9], 3)
+        expect(paginator.first.elements.count).to eq(3)
       end
     end
   end
