@@ -34,6 +34,11 @@ describe Page do
       end
 
       context "when they are different" do
+        context "and other is not a page" do
+          let(:other_page) { "definitely not a page" }
+          specify { expect(subject).to eq(false) }
+        end
+
         context "and the second has different values" do
           before(:each) do
             allow(other_page).to receive(:index).and_return(1)
@@ -80,6 +85,11 @@ describe Page do
       end
 
       context "when they are different" do
+        context "and other is not a page" do
+          let(:other_page) { "definitely not a page" }
+          specify { expect(subject).to eq(false) }
+        end
+
         context "because the second has different values" do
           before(:each) do
             allow(other_page).to receive(:index).and_return(1)
