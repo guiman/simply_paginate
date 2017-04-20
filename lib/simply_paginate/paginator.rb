@@ -30,7 +30,7 @@ module SimplyPaginate
     end
 
     def total_pages
-      (@collection.count.to_f / @per_page.to_f).ceil
+      (@collection.count / @per_page) + (@collection.count % @per_pages)
     end
 
     def [](index)
